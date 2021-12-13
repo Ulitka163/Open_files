@@ -12,7 +12,23 @@ def cook_book_create(file):
                                     }
                                    )
             file.readline()
-    return print(cook_book)
+    return cook_book
 
 
-cook_book_create('files.txt')
+def get_shop_list_by_dishes(dishes, person_count):
+    cook_book = cook_book_create('files.txt')
+    number_ingredient = {}
+    for cook in dishes:
+        if cook in cook_book.keys():
+            for values in cook_book.get(cook):
+                if values.get('ingredient_name') in number_ingredient.keys():
+                    number_ingredient[values.get('ingredient_name')]['quantity'] = number_ingredient[values.get('ingredient_name')]['quantity'] + int(values.get('quantity')) * person_count
+                else:
+                    number_ingredient[values.get('ingredient_name')] = {'measure': values.get('measure'),
+                                                                    'quantity': int(values.get('quantity')) * person_count
+                                                                    }
+    return print(number_ingredient)
+
+get_shop_list_by_dishes(['Фахитос', 'Омлет'], 2)
+
+
